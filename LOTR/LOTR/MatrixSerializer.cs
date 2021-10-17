@@ -23,17 +23,6 @@ namespace LOTR {
                     map[i, j] = lines[i][j];
                 }
             }
-
-            /*int cols = i;
-            i = 0;
-            for (int z = 0; z < cols; z++) {
-                foreach (char s in lines[i]) {
-                    Console.Write(s);
-                }
-                Console.WriteLine();
-
-                i++;
-            }*/
             
             File.WriteAllLines(pathO, lines);
         }

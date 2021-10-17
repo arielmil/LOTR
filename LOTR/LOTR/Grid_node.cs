@@ -15,10 +15,10 @@ namespace LOTR {
         public int hscore { get; set; }
         
         //Sum of g + h
-        public int fscore;
+        public int fscore { get; set; }
 
-        public int X;
-        public int Y;
+        public int X { get; set; }
+        public int Y { get; set; }
 
         private List<Grid_node> Neighbors;
 
@@ -46,6 +46,10 @@ namespace LOTR {
         
         public int getCost() {
             return types[tileType];
+        }
+
+        public bool Equals(Grid_node gridNode) {
+            return (gridNode.X == X && gridNode.Y == Y);
         }
     }
 }
