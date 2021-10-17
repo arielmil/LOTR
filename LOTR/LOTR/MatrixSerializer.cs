@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using System.Linq;
 
@@ -18,12 +19,23 @@ namespace LOTR {
             map = new char[lineCount, rowCount];
 
             for (i = 0; i < lineCount; i++) {
-                for (j = 0; j < rowCount; i++) {
+                for (j = 0; j < rowCount; j++) {
                     map[i, j] = lines[i][j];
                 }
             }
+
+            /*int cols = i;
+            i = 0;
+            for (int z = 0; z < cols; z++) {
+                foreach (char s in lines[i]) {
+                    Console.Write(s);
+                }
+                Console.WriteLine();
+
+                i++;
+            }*/
             
-            File.WriteAllLinesAsync(pathO, lines);
+            File.WriteAllLines(pathO, lines);
         }
     }
 }
