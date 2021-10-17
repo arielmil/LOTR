@@ -1,0 +1,13 @@
+/home/ariel/Desktop/8o_periodo/AI/G1/LOTR/LOTR/bin/Debug/netcoreapp3.1/LOTR
+/home/ariel/Desktop/8o_periodo/AI/G1/LOTR/LOTR/bin/Debug/netcoreapp3.1/LOTR.deps.json
+/home/ariel/Desktop/8o_periodo/AI/G1/LOTR/LOTR/bin/Debug/netcoreapp3.1/LOTR.runtimeconfig.json
+/home/ariel/Desktop/8o_periodo/AI/G1/LOTR/LOTR/bin/Debug/netcoreapp3.1/LOTR.runtimeconfig.dev.json
+/home/ariel/Desktop/8o_periodo/AI/G1/LOTR/LOTR/bin/Debug/netcoreapp3.1/LOTR.dll
+/home/ariel/Desktop/8o_periodo/AI/G1/LOTR/LOTR/bin/Debug/netcoreapp3.1/LOTR.pdb
+/home/ariel/Desktop/8o_periodo/AI/G1/LOTR/LOTR/obj/Debug/netcoreapp3.1/LOTR.csprojAssemblyReference.cache
+/home/ariel/Desktop/8o_periodo/AI/G1/LOTR/LOTR/obj/Debug/netcoreapp3.1/LOTR.AssemblyInfoInputs.cache
+/home/ariel/Desktop/8o_periodo/AI/G1/LOTR/LOTR/obj/Debug/netcoreapp3.1/LOTR.AssemblyInfo.cs
+/home/ariel/Desktop/8o_periodo/AI/G1/LOTR/LOTR/obj/Debug/netcoreapp3.1/LOTR.csproj.CoreCompileInputs.cache
+/home/ariel/Desktop/8o_periodo/AI/G1/LOTR/LOTR/obj/Debug/netcoreapp3.1/LOTR.dll
+/home/ariel/Desktop/8o_periodo/AI/G1/LOTR/LOTR/obj/Debug/netcoreapp3.1/LOTR.pdb
+/home/ariel/Desktop/8o_periodo/AI/G1/LOTR/LOTR/obj/Debug/netcoreapp3.1/LOTR.genruntimeconfig.cache

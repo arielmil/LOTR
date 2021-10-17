@@ -3,7 +3,7 @@
 namespace LOTR {
     class Program {
         static void Main(string[] args) {
-            
+            MatrixSerializer.fileToMap();
         }
     }
 }
