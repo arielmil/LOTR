@@ -25,8 +25,8 @@ namespace LOTR {
                 }
             }
 
-            Grid_node.maxX = j;
-            Grid_node.maxY = i;
+            Grid_node.XMax = j;
+            Grid_node.YMax = i;
             
             File.WriteAllLines(pathO, lines);
         }

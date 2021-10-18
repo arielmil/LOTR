@@ -4,13 +4,9 @@ using System.Collections.Generic;
 namespace LOTR {
     public static class Types {
 
-        public enum neighborConstrains {
-            XEqual0,
-            XGreaterThen0,
-            XEqualMax,
-            YEqual0,
-            YGreaterThen0,
-            YEqualMax
+        public enum heuristicMethod {
+            Manhattan,
+            Euclidian
         }
         
         public static Dictionary<char, int> tileTypeToInt = new Dictionary<char, int>() {{'.', 1}, {'R', 5},
