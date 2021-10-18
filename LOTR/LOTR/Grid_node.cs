@@ -5,9 +5,7 @@ using static LOTR.Types;
 namespace LOTR {
     public class Grid_node {
         public char tileType { get; set; }
-
-        public bool visited { get; set; }
-
+        
         //Distance from node to begin
         public float g { get; set; }
         
@@ -30,21 +28,13 @@ namespace LOTR {
         public Grid_node(char type, int X, int Y) {
             tileType = type;
             Neighbors = new List<Grid_node>();
-
-
-            visited = false;
-
+            
             g = 0;
             f = 0;
             h = 0;
             
             this.X = X;
             this.Y = Y;
-        }
-
-        //Ver se é necessário
-        public void setVisited() {
-            visited = !visited;
         }
         
         public int getTypeCost() {
