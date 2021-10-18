@@ -4,10 +4,10 @@ using System.Numerics;
 
 namespace LOTR {
     public class A_star {
-        private static List<Grid_node> Objectives;
+        private List<Grid_node> Objectives { get; set; }
 
         private Grid_node Shire;
-        private Grid_node MountainOfDoom;
+        public Grid_node fatherPath { get; private set; }
         
         public A_star(List <Vector2> objectivesLocations) {
             Objectives = new List<Grid_node>();
@@ -15,10 +15,9 @@ namespace LOTR {
             loadObjectives(objectivesLocations);
 
             Shire = Objectives[0];
-            MountainOfDoom = Objectives[Objectives.Count - 1];
         }
 
-        public static void loadObjectives(List <Vector2> objectivesLocations) {
+        private void loadObjectives(List <Vector2> objectivesLocations) {
             int objectiveX, objectiveY;
             Grid_node objectiveNode;
             
@@ -32,16 +31,18 @@ namespace LOTR {
         
         //Main Loop from shire to mountDoom and back
         public void ToMountDoomAndBack() {
-            //Falta fazer uma estrutura para armazenar o path todo
+            Grid_node source = Shire;
+            
             int i;
-
             for (i = 0; i < Objectives.Count - 1; i++) {
-                FromSourceToDestiny(Objectives[i], Objectives[i + 1]);
+                source = FromSourceToDestiny(source, Objectives[i + 1]);
             }
+
+            fatherPath = source;
         }
 
         //A* algorithm implementation
-        public void FromSourceToDestiny(Grid_node source, Grid_node destiny) {
+        public Grid_node FromSourceToDestiny(Grid_node source, Grid_node destiny) {
             int i;
 
             float best;
@@ -54,11 +55,11 @@ namespace LOTR {
             
             open.Add(currentNode);
             
-            while (!currentNode.Equals(destiny)) {
+            while (open.Count > 0) {
                 currentNode = open.Min;
                 
                 if (currentNode.Equals(destiny)) {
-                    return;
+                    return currentNode;
                 }
                 
                 open.Remove(currentNode);
@@ -72,7 +73,7 @@ namespace LOTR {
                     neighbor = currentNode.Neighbors[i];
 
                     if (neighbor.Equals(destiny)) {
-                        return;
+                        return neighbor;
                     }
 
                     if (neighbor.tileType == '#' || neighbor.tileType == 'P' || closed.Contains(neighbor)) {
@@ -92,6 +93,9 @@ namespace LOTR {
                 }
                 
             }
+
+            //No path found
+            return null;
         }
 
     }

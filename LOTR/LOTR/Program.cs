@@ -3,7 +3,8 @@
 namespace LOTR {
     class Program {
         static void Main(string[] args) {
-            MatrixSerializer.fileToMap();
+            //Setar os objetivos
+            //Instanciar A_star com os objetivos depois chamar
         }
     }
 }
