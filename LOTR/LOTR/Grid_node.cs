@@ -19,8 +19,11 @@ namespace LOTR {
 
         public int X { get; set; }
         public int Y { get; set; }
+        
+        public static int maxX { get; set; }
+        public static int maxY { get; set; }
 
-        private List<Grid_node> Neighbors;
+        public List<Grid_node> Neighbors { get; set; }
 
         public Grid_node(char type, int X, int Y) {
             tileType = type;
@@ -48,6 +51,162 @@ namespace LOTR {
             return types[tileType];
         }
 
+        //Refatorar, quebrar em metodos distintos para reutilizar os códigos que estão reescritos e são quase iguais.
+        public static void expand(Grid_node gridNode) {
+            int neighborX, neighborY;
+            char neighborTileType;
+
+            Grid_node neighbor;
+            
+            int i;
+            if (gridNode.X > 0 && gridNode.X < maxX) {
+                for (i = 0; i < 2; i++) {
+                    neighborY = gridNode.Y;
+                    neighborX = gridNode.X + i + 1;
+
+                    neighborTileType = MatrixSerializer.map[neighborX, neighborY];
+
+                    if (Grid_node_network.Exist(neighborX, neighborY)) {
+                        gridNode.Neighbors.Add(Grid_node_network.Get(neighborX, neighborY));
+                    }
+
+                    else {
+                        neighbor = new Grid_node(neighborTileType, neighborX, neighborY);
+                        
+                        Grid_node_network.Add(neighbor);
+                        gridNode.Neighbors.Add(neighbor);
+                    }
+                    
+                    neighborX = gridNode.X - (i + 1);
+                    
+                    neighborTileType = MatrixSerializer.map[neighborX, neighborY];
+                    
+                    if (Grid_node_network.Exist(neighborX, neighborY)) {
+                        gridNode.Neighbors.Add(Grid_node_network.Get(neighborX, neighborY));
+                    }
+
+                    else {
+                        neighbor = new Grid_node(neighborTileType, neighborX, neighborY);
+                        
+                        Grid_node_network.Add(neighbor);
+                        gridNode.Neighbors.Add(neighbor);
+                    }
+                }
+            }
+            
+            else {
+                if (gridNode.X == 0) {
+                    neighborY = gridNode.Y;
+                    neighborX = gridNode.X + 1;
+                    
+                    neighborTileType = MatrixSerializer.map[neighborX, neighborY];
+                    
+                    if (Grid_node_network.Exist(neighborX, neighborY)) {
+                        gridNode.Neighbors.Add(Grid_node_network.Get(neighborX, neighborY));
+                    }
+
+                    else {
+                        neighbor = new Grid_node(neighborTileType, neighborX, neighborY);
+                        
+                        Grid_node_network.Add(neighbor);
+                        gridNode.Neighbors.Add(neighbor);
+                    }
+                }
+
+                else {
+                    neighborY = gridNode.Y;
+                    neighborX = gridNode.X - 1;
+                    
+                    neighborTileType = MatrixSerializer.map[neighborX, neighborY];
+                    
+                    if (Grid_node_network.Exist(neighborX, neighborY)) {
+                        gridNode.Neighbors.Add(Grid_node_network.Get(neighborX, neighborY));
+                    }
+                    
+                    else {
+                        neighbor = new Grid_node(neighborTileType, neighborX, neighborY);
+                        
+                        Grid_node_network.Add(neighbor);
+                        gridNode.Neighbors.Add(neighbor);
+                    }
+                }
+                
+            }
+
+            if (gridNode.Y > 0 && gridNode.Y < maxY) {
+                for (i = 0; i < 4; i++) {
+                    neighborY = gridNode.Y + i + 1;
+                    neighborX = gridNode.X;
+                    
+                    neighborTileType = MatrixSerializer.map[neighborX, neighborY];
+                    
+                    if (Grid_node_network.Exist(neighborX, neighborY)) {
+                        gridNode.Neighbors.Add(Grid_node_network.Get(neighborX, neighborY));
+                    }
+
+                    else {
+                        neighbor = new Grid_node(neighborTileType, neighborX, neighborY);
+                        
+                        Grid_node_network.Add(neighbor);
+                        gridNode.Neighbors.Add(neighbor);
+                    }
+                    
+                    neighborY = gridNode.Y - (i + 1);
+                    
+                    neighborTileType = MatrixSerializer.map[neighborX, neighborY];
+                    
+                    if (Grid_node_network.Exist(neighborX, neighborY)) {
+                        gridNode.Neighbors.Add(Grid_node_network.Get(neighborX, neighborY));
+                    }
+
+                    else {
+                        neighbor = new Grid_node(neighborTileType, neighborX, neighborY);
+                        
+                        Grid_node_network.Add(neighbor);
+                        gridNode.Neighbors.Add(neighbor);
+                    }
+                }
+            }
+
+            else {
+                if (gridNode.Y == 0) {
+                    neighborX = gridNode.X;
+                    neighborY = gridNode.Y + 1;
+                    
+                    neighborTileType = MatrixSerializer.map[neighborX, neighborY];
+                    
+                    if (Grid_node_network.Exist(neighborX, neighborY)) {
+                        gridNode.Neighbors.Add(Grid_node_network.Get(neighborX, neighborY));
+                    }
+
+                    else {
+                        neighbor = new Grid_node(neighborTileType, neighborX, neighborY);
+                        
+                        Grid_node_network.Add(neighbor);
+                        gridNode.Neighbors.Add(neighbor);
+                    }
+                }
+
+                else {
+                    neighborX = gridNode.X;
+                    neighborY = gridNode.Y - 1;
+                    
+                    neighborTileType = MatrixSerializer.map[neighborX, neighborY];
+                    
+                    if (Grid_node_network.Exist(neighborX, neighborY)) {
+                        gridNode.Neighbors.Add(Grid_node_network.Get(neighborX, neighborY));
+                    }
+                    
+                    else {
+                        neighbor = new Grid_node(neighborTileType, neighborX, neighborY);
+                        
+                        Grid_node_network.Add(neighbor);
+                        gridNode.Neighbors.Add(neighbor);
+                    }
+                }
+            }
+        }
+        
         public bool Equals(Grid_node gridNode) {
             return (gridNode.X == X && gridNode.Y == Y);
         }

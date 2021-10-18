@@ -7,7 +7,8 @@ namespace LOTR {
         public static char[,] map;
         
         public static void fileToMap() {
-            int i, j;
+            //j = 0 por que compilador estava reclamando na linha 28
+            int i, j = 0;
             string pathI = Path.GetFullPath(Path.Combine(".", "..", "..", "..", "..", "mapa4.txt"));
             string pathO =  Path.GetFullPath(Path.Combine(".", "..", "..", "..", "..", "mapaOut.txt"));
             
@@ -23,6 +24,9 @@ namespace LOTR {
                     map[i, j] = lines[i][j];
                 }
             }
+
+            Grid_node.maxX = j;
+            Grid_node.maxY = i;
             
             File.WriteAllLines(pathO, lines);
         }
