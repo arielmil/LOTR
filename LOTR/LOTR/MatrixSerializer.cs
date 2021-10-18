@@ -1,6 +1,4 @@
-using System;
 using System.IO;
-using System.Linq;
 
 namespace LOTR {
     public class MatrixSerializer {
@@ -10,9 +8,8 @@ namespace LOTR {
             //j = 0 por que compilador estava reclamando na linha 28
             int i, j = 0;
             string pathI = Path.GetFullPath(Path.Combine(".", "..", "..", "..", "..", "mapa4.txt"));
-            string pathO =  Path.GetFullPath(Path.Combine(".", "..", "..", "..", "..", "mapaOut.txt"));
             
-            string[] lines = System.IO.File.ReadAllLines(pathI);
+            string[] lines = File.ReadAllLines(pathI);
             
             int lineCount = lines.Length;
             int rowCount = lines[0].Length;
@@ -27,8 +24,6 @@ namespace LOTR {
 
             Grid_node.XMax = j;
             Grid_node.YMax = i;
-            
-            File.WriteAllLines(pathO, lines);
         }
     }
 }

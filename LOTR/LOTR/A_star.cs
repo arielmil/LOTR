@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using System.Numerics;
 
 namespace LOTR {
@@ -19,7 +18,6 @@ namespace LOTR {
 
         private void loadObjectives(List <Vector2> objectivesLocations) {
             int objectiveX, objectiveY;
-            Grid_node objectiveNode;
             
             foreach (Vector2 objectiveLocation in objectivesLocations) {
                 objectiveX = (int) objectiveLocation.X;

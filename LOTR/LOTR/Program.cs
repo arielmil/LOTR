@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace LOTR {
+﻿namespace LOTR {
     class Program {
         static void Main(string[] args) {
             //Setar os objetivos
