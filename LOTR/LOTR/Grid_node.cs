@@ -22,6 +22,8 @@ namespace LOTR {
         
         public static int maxX { get; set; }
         public static int maxY { get; set; }
+        
+        public Grid_node parent { get; set; }
 
         public List<Grid_node> Neighbors { get; set; }
 
@@ -47,10 +49,11 @@ namespace LOTR {
             Neighbors.Add(neighbor);
         }
         
-        public int getCost() {
-            return types[tileType];
+        public int getTypeCost() {
+            return tileTypeToInt[tileType];
         }
-
+        
+        
         //Refatorar, quebrar em metodos distintos para reutilizar os códigos que estão reescritos e são quase iguais.
         public static void expand(Grid_node gridNode) {
             int neighborX, neighborY;
@@ -67,15 +70,19 @@ namespace LOTR {
                     neighborTileType = MatrixSerializer.map[neighborX, neighborY];
 
                     if (Grid_node_network.Exist(neighborX, neighborY)) {
-                        gridNode.Neighbors.Add(Grid_node_network.Get(neighborX, neighborY));
+                        neighbor = Grid_node_network.Get(neighborX, neighborY);
+                        gridNode.Neighbors.Add(neighbor);
                     }
 
                     else {
                         neighbor = new Grid_node(neighborTileType, neighborX, neighborY);
-                        
                         Grid_node_network.Add(neighbor);
                         gridNode.Neighbors.Add(neighbor);
                     }
+
+                    neighbor.gscore = gridNode.gscore + neighbor.getTypeCost();
+                    neighbor.hscore = gridNode.hscore - neighbor.getTypeCost();
+                    neighbor.fscore = neighbor.gscore + neighbor.hscore;
                     
                     neighborX = gridNode.X - (i + 1);
                     
@@ -91,6 +98,10 @@ namespace LOTR {
                         Grid_node_network.Add(neighbor);
                         gridNode.Neighbors.Add(neighbor);
                     }
+                    
+                    neighbor.gscore = gridNode.gscore + neighbor.getTypeCost();
+                    neighbor.hscore = gridNode.hscore - neighbor.getTypeCost();
+                    neighbor.fscore = neighbor.gscore + neighbor.hscore;
                 }
             }
             
@@ -98,38 +109,29 @@ namespace LOTR {
                 if (gridNode.X == 0) {
                     neighborY = gridNode.Y;
                     neighborX = gridNode.X + 1;
-                    
-                    neighborTileType = MatrixSerializer.map[neighborX, neighborY];
-                    
-                    if (Grid_node_network.Exist(neighborX, neighborY)) {
-                        gridNode.Neighbors.Add(Grid_node_network.Get(neighborX, neighborY));
-                    }
-
-                    else {
-                        neighbor = new Grid_node(neighborTileType, neighborX, neighborY);
-                        
-                        Grid_node_network.Add(neighbor);
-                        gridNode.Neighbors.Add(neighbor);
-                    }
                 }
 
                 else {
                     neighborY = gridNode.Y;
                     neighborX = gridNode.X - 1;
-                    
-                    neighborTileType = MatrixSerializer.map[neighborX, neighborY];
-                    
-                    if (Grid_node_network.Exist(neighborX, neighborY)) {
-                        gridNode.Neighbors.Add(Grid_node_network.Get(neighborX, neighborY));
-                    }
-                    
-                    else {
-                        neighbor = new Grid_node(neighborTileType, neighborX, neighborY);
-                        
-                        Grid_node_network.Add(neighbor);
-                        gridNode.Neighbors.Add(neighbor);
-                    }
                 }
+                
+                neighborTileType = MatrixSerializer.map[neighborX, neighborY];
+                    
+                if (Grid_node_network.Exist(neighborX, neighborY)) {
+                    neighbor = Grid_node_network.Get(neighborX, neighborY);
+                    gridNode.Neighbors.Add(neighbor);
+                }
+
+                else {
+                    neighbor = new Grid_node(neighborTileType, neighborX, neighborY);
+                    Grid_node_network.Add(neighbor);
+                    gridNode.Neighbors.Add(neighbor);
+                }
+                
+                neighbor.gscore = gridNode.gscore + neighbor.getTypeCost();
+                neighbor.hscore = gridNode.hscore - neighbor.getTypeCost();
+                neighbor.fscore = neighbor.gscore + neighbor.hscore;
                 
             }
 
@@ -141,22 +143,27 @@ namespace LOTR {
                     neighborTileType = MatrixSerializer.map[neighborX, neighborY];
                     
                     if (Grid_node_network.Exist(neighborX, neighborY)) {
-                        gridNode.Neighbors.Add(Grid_node_network.Get(neighborX, neighborY));
+                        neighbor = Grid_node_network.Get(neighborX, neighborY);
+                        gridNode.Neighbors.Add(neighbor);
                     }
 
                     else {
                         neighbor = new Grid_node(neighborTileType, neighborX, neighborY);
-                        
                         Grid_node_network.Add(neighbor);
                         gridNode.Neighbors.Add(neighbor);
                     }
+                    
+                    neighbor.gscore = gridNode.gscore + neighbor.getTypeCost();
+                    neighbor.hscore = gridNode.hscore - neighbor.getTypeCost();
+                    neighbor.fscore = neighbor.gscore + neighbor.hscore;
                     
                     neighborY = gridNode.Y - (i + 1);
                     
                     neighborTileType = MatrixSerializer.map[neighborX, neighborY];
                     
                     if (Grid_node_network.Exist(neighborX, neighborY)) {
-                        gridNode.Neighbors.Add(Grid_node_network.Get(neighborX, neighborY));
+                        neighbor = Grid_node_network.Get(neighborX, neighborY);
+                        gridNode.Neighbors.Add(neighbor);
                     }
 
                     else {
@@ -165,6 +172,10 @@ namespace LOTR {
                         Grid_node_network.Add(neighbor);
                         gridNode.Neighbors.Add(neighbor);
                     }
+                    
+                    neighbor.gscore = gridNode.gscore + neighbor.getTypeCost();
+                    neighbor.hscore = gridNode.hscore - neighbor.getTypeCost();
+                    neighbor.fscore = neighbor.gscore + neighbor.hscore;
                 }
             }
 
@@ -172,38 +183,29 @@ namespace LOTR {
                 if (gridNode.Y == 0) {
                     neighborX = gridNode.X;
                     neighborY = gridNode.Y + 1;
-                    
-                    neighborTileType = MatrixSerializer.map[neighborX, neighborY];
-                    
-                    if (Grid_node_network.Exist(neighborX, neighborY)) {
-                        gridNode.Neighbors.Add(Grid_node_network.Get(neighborX, neighborY));
-                    }
-
-                    else {
-                        neighbor = new Grid_node(neighborTileType, neighborX, neighborY);
-                        
-                        Grid_node_network.Add(neighbor);
-                        gridNode.Neighbors.Add(neighbor);
-                    }
                 }
 
                 else {
                     neighborX = gridNode.X;
                     neighborY = gridNode.Y - 1;
-                    
-                    neighborTileType = MatrixSerializer.map[neighborX, neighborY];
-                    
-                    if (Grid_node_network.Exist(neighborX, neighborY)) {
-                        gridNode.Neighbors.Add(Grid_node_network.Get(neighborX, neighborY));
-                    }
-                    
-                    else {
-                        neighbor = new Grid_node(neighborTileType, neighborX, neighborY);
-                        
-                        Grid_node_network.Add(neighbor);
-                        gridNode.Neighbors.Add(neighbor);
-                    }
                 }
+                
+                neighborTileType = MatrixSerializer.map[neighborX, neighborY];
+                    
+                if (Grid_node_network.Exist(neighborX, neighborY)) {
+                    neighbor = Grid_node_network.Get(neighborX, neighborY);
+                    gridNode.Neighbors.Add(neighbor);
+                }
+
+                else {
+                    neighbor = new Grid_node(neighborTileType, neighborX, neighborY);
+                    Grid_node_network.Add(neighbor);
+                    gridNode.Neighbors.Add(neighbor);
+                }
+                
+                neighbor.gscore = gridNode.gscore + neighbor.getTypeCost();
+                neighbor.hscore = gridNode.hscore - neighbor.getTypeCost();
+                neighbor.fscore = neighbor.gscore + neighbor.hscore;
             }
         }
         

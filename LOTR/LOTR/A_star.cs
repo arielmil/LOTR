@@ -31,10 +31,14 @@ namespace LOTR {
 
         //A* algorithim implementation
         public void FromSourceToDestiny(Grid_node source, Grid_node destiny) {
+            int i;
+            
             List<Grid_node> open = new List<Grid_node>();
             List<Grid_node> closed = new List<Grid_node>();
             
             Grid_node currentNode = source;
+            Grid_node neighbor;
+            
             open.Add(currentNode);
             
             while (currentNode.Equals(destiny)) {
@@ -48,13 +52,18 @@ namespace LOTR {
                 closed.Add(currentNode);
 
                 //Transformar em um loop de repetição aonde a váriavel neighbor pode ser alterada
-                foreach (Grid_node neighbor in currentNode.Neighbors) {
+
+                for (i = 0; i < currentNode.Neighbors.Count; i++) {
+                    Grid_node.expand(currentNode);
+                    
+                    neighbor = currentNode.Neighbors[i];
                     if (neighbor.tileType == '#' || neighbor.tileType == 'P' || closed.Contains(neighbor)) {
                         continue;
                     }
-
-                    Grid_node.expand(neighbor);
+                    
+                    
                 }
+                
             }
         }
 
