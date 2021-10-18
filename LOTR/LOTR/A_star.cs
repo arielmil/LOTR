@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Numerics;
 
@@ -8,21 +9,21 @@ namespace LOTR {
         private Grid_node Shire;
         public Grid_node fatherPath { get; private set; }
         
-        public A_star(List <Vector2> objectivesLocations) {
+        public A_star(MatrixSerializer matrixSerializer) {
             Objectives = new List<Grid_node>();
 
-            loadObjectives(objectivesLocations);
+            loadObjectives(matrixSerializer.exportObjectivesLocations());
 
             Shire = Objectives[0];
         }
 
-        private void loadObjectives(List <Vector2> objectivesLocations) {
+        private void loadObjectives(List <(int, int)> objectivesLocations) {
             int objectiveX, objectiveY;
             
-            foreach (Vector2 objectiveLocation in objectivesLocations) {
-                objectiveX = (int) objectiveLocation.X;
-                objectiveY = (int) objectiveLocation.Y;
-
+            foreach ((int, int) XY  in objectivesLocations) {
+                objectiveX = XY.Item1;
+                objectiveY = XY.Item2;
+                Console.WriteLine($"Objective {MatrixSerializer.map[objectiveX, objectiveY]}: X: {objectiveX + 1}, Y: {objectiveY + 1}");
                 Objectives.Add(new Grid_node(MatrixSerializer.map[objectiveX, objectiveY], objectiveX, objectiveY));
             }
         }
