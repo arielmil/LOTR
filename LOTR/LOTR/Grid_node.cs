@@ -25,7 +25,7 @@ namespace LOTR {
         
         public Grid_node parent { get; set; }
 
-        public List<Grid_node> Neighbors { get; set; }
+        public List<Grid_node> Neighbors { get; private set; }
 
         public Grid_node(char type, int X, int Y) {
             tileType = type;
@@ -42,12 +42,9 @@ namespace LOTR {
             this.Y = Y;
         }
 
+        //Ver se é necessário
         public void setVisited() {
             visited = !visited;
-        }
-
-        public void addNeighbor(Grid_node neighbor) {
-            Neighbors.Add(neighbor);
         }
         
         public int getTypeCost() {
@@ -55,10 +52,6 @@ namespace LOTR {
         }
 
         public void expand(Grid_node endNode, heuristicMethod method) {
-            int neighborX, neighborY;
-
-            Grid_node neighbor;
-
             if (X > XMax && X < 0 || Y > YMax && Y < 0) {
                 if (X > XMax && X < 0) {
                     setOneNeighbor(X + 1, Y, endNode, method);
