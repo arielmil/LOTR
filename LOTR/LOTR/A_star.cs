@@ -1,15 +1,17 @@
 using System;
 using System.Collections.Generic;
-using System.Numerics;
 
 namespace LOTR {
     public class A_star {
+        private bool debug;
         private List<Grid_node> Objectives { get; set; }
 
         private Grid_node Shire;
         public Grid_node fatherPath { get; private set; }
         
-        public A_star(MatrixSerializer matrixSerializer) {
+        public A_star(MatrixSerializer matrixSerializer, bool debug = false) {
+            this.debug = debug;
+            
             Objectives = new List<Grid_node>();
 
             loadObjectives(matrixSerializer.exportObjectivesLocations());
@@ -23,7 +25,11 @@ namespace LOTR {
             foreach ((int, int) XY  in objectivesLocations) {
                 objectiveX = XY.Item1;
                 objectiveY = XY.Item2;
-                Console.WriteLine($"Objective {MatrixSerializer.map[objectiveX, objectiveY]}: X: {objectiveX + 1}, Y: {objectiveY + 1}");
+
+                if (debug) {
+                    Console.WriteLine($"Objective {MatrixSerializer.map[objectiveX, objectiveY]}: X: {objectiveX + 1}, Y: {objectiveY + 1}");
+                }
+                
                 Objectives.Add(new Grid_node(MatrixSerializer.map[objectiveX, objectiveY], objectiveX, objectiveY));
             }
         }
@@ -46,8 +52,8 @@ namespace LOTR {
 
             float best;
             
-            SortedSet<Grid_node> open = new SortedSet<Grid_node>();
-            SortedSet<Grid_node> closed = new SortedSet<Grid_node>();
+            SortedSet<Grid_node> open = new SortedSet<Grid_node>(new NodeComparer());
+            List<Grid_node> closed = new List<Grid_node>();
             
             Grid_node currentNode = source;
             Grid_node neighbor;
@@ -87,6 +93,7 @@ namespace LOTR {
 
                     if (!open.Contains(neighbor)) {
                         open.Add(neighbor);
+                        System.Console.WriteLine(open.Count);
                     }
                     
                 }
@@ -97,5 +104,18 @@ namespace LOTR {
             return null;
         }
 
+        private class NodeComparer : IComparer<Grid_node> {
+            public int Compare(Grid_node node1, Grid_node node2) {
+                if (node2 != null && node1 != null && node1.f < node2.f) {
+                    return -1;
+                }
+                
+                if (node2 != null && node1 != null && node1.f == node2.f) {
+                    return 0;
+                }
+
+                return 1;
+            }
+        }
     }
 }

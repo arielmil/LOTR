@@ -10,14 +10,14 @@ namespace LOTR {
 
         private SortedSet<char> objectives;
         
-        public MatrixSerializer() {
+        public MatrixSerializer(bool debug = false) {
             char tyle;
             
             string pathI = Path.GetFullPath(Path.Combine(".", "..", "..", "..", "..", "mapa4.txt"));
             
             string[] lines = File.ReadAllLines(pathI);
             
-            objectives = new SortedSet<char>(new ObjectiveComparer());
+            objectives = new SortedSet<char>(new ObjectiveComparer(debug));
             
             int lineCount = lines.Length;
             int rowCount = lines[0].Length;
@@ -53,6 +53,11 @@ namespace LOTR {
         }
         
         private class ObjectiveComparer : IComparer<char> {
+            private bool debug;
+
+            public ObjectiveComparer(bool debug) {
+                this.debug = debug;
+            }
             public int Compare(char objective1, char objective2) {
                 bool objective1IsNumber = Char.IsNumber(objective1);
                 bool objective2IsNumber = Char.IsNumber(objective2);
@@ -61,7 +66,9 @@ namespace LOTR {
             
                 if (objective1IsNumber) {
                     if (objective2IsNumber) {
-                        System.Console.WriteLine($"objective1: {objective1}, objective2: {objective2}");
+                        if (debug) {
+                            Console.WriteLine($"objective1: {objective1}, objective2: {objective2}");
+                        }
                         return objective1.CompareTo(objective2);
                     }
                 
