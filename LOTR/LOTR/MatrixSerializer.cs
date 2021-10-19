@@ -25,22 +25,23 @@ namespace LOTR {
             map = new char[lineCount, rowCount];
 
             int i, j = 0;
-            for (i = 0; i < lineCount; i++) {
-                for (j = 0; j < rowCount; j++) {
-                    tyle = lines[i][j];
+            for (i = 0; i < rowCount; i++) {
+                for (j = 0; j < lineCount; j++) {
+                    tyle = lines[j][i];
 
                     if (!terrainOptions.Contains(tyle)) {
-                        Types.charToObjectiveLocation.Add(tyle, (i, j));
+                        Types.charToObjectiveLocation.Add(tyle, (j, i));
+                        Types.tileTypeToInt.Add(tyle, 1);
                         objectives.Add(tyle);
                     }
                     
-                    map[i, j] = tyle;
+                    map[j, i] = tyle;
                 }
             }
             
             
-            Grid_node.XMax = j;
-            Grid_node.YMax = i;
+            Grid_node.XMax = i;
+            Grid_node.YMax = j;
         }
 
         public List<(int, int)>  exportObjectivesLocations() {
@@ -72,7 +73,7 @@ namespace LOTR {
                         return objective1.CompareTo(objective2);
                     }
                 
-                    return 1;
+                    return -1;
                 }
             
                 if (objective2IsNumber) {
