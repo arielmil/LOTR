@@ -25,8 +25,8 @@ namespace LOTR {
 
         public List<Grid_node> Neighbors { get; private set; }
 
-        public Grid_node(char type, int X, int Y) {
-            tileType = type;
+        public Grid_node(int X, int Y) {
+            tileType = MatrixSerializer.map[X, Y];
             Neighbors = new List<Grid_node>();
             
             g = 0;
@@ -42,12 +42,12 @@ namespace LOTR {
         }
 
         public void expand(Grid_node endNode, heuristicMethod method) {
-            if (X > XMax && X < 0 || Y > YMax && Y < 0) {
-                if (X > XMax && X < 0) {
+            if (X > 0 && X < XMax || Y > 0 && Y < YMax) {
+                if (X > 0 && X < XMax) {
                     setOneNeighbor(X + 1, Y, endNode, method);
                     setOneNeighbor(X - 1, Y, endNode, method);
                 }
-                if (Y > YMax && Y < 0) {
+                if (Y > 0 && Y < YMax) {
                     setOneNeighbor(X, Y + 1, endNode, method);
                     setOneNeighbor(X, Y - 1, endNode, method);
                 }
@@ -78,7 +78,7 @@ namespace LOTR {
             Grid_node neighbor = Grid_node_network.Get(neighborX, neighborY);
             if (neighbor == null) {
                     
-                neighbor = new Grid_node(MatrixSerializer.map[neighborX, neighborY], neighborX, neighborY);
+                neighbor = new Grid_node(neighborX, neighborY);
                 neighbor.g = g + neighbor.getTypeCost();
                 neighbor.SetFestimateHValue(destiny, method);
                 neighbor.f = g + h;

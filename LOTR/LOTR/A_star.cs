@@ -30,7 +30,7 @@ namespace LOTR {
                     Console.WriteLine($"Objective {MatrixSerializer.map[objectiveX, objectiveY]}: X: {objectiveX + 1}, Y: {objectiveY + 1}");
                 }
                 
-                Objectives.Add(new Grid_node(MatrixSerializer.map[objectiveX, objectiveY], objectiveX, objectiveY));
+                Objectives.Add(new Grid_node(objectiveX, objectiveY));
             }
         }
         
@@ -93,7 +93,6 @@ namespace LOTR {
 
                     if (!open.Contains(neighbor)) {
                         open.Add(neighbor);
-                        System.Console.WriteLine(open.Count);
                     }
                     
                 }
