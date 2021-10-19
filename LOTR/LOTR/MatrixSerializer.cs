@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Numerics;
 
 namespace LOTR {
@@ -21,13 +22,19 @@ namespace LOTR {
             
             int lineCount = lines.Length;
             int rowCount = lines[0].Length;
-
-            map = new char[lineCount, rowCount];
+            Console.WriteLine($"rowCount: {rowCount}, lineCount: {lineCount}");
+            map = new char[rowCount, lineCount];
 
             int i, j = 0;
-            for (i = 0; i < rowCount; i++) {
-                for (j = 0; j < lineCount; j++) {
-                    tyle = lines[j][i];
+            for (i = 0; i < lineCount - 1; i++) {
+                for (j = 0; j < rowCount; j++) {
+                    try {
+                        tyle = lines[j][i];
+
+                    }
+                    catch(Exception er) {
+                        throw (new Exception($"Error. Matrix out of bounds at line {i} row {j}."));
+                    }
 
                     if (!terrainOptions.Contains(tyle)) {
                         Types.charToObjectiveLocation.Add(tyle, (j, i));
@@ -40,8 +47,8 @@ namespace LOTR {
             }
             
             
-            Grid_node.XMax = i;
-            Grid_node.YMax = j;
+            Grid_node.XMax = j;
+            Grid_node.YMax = i;
         }
 
         public List<(int, int)>  exportObjectivesLocations() {
