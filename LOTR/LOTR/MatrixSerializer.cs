@@ -22,33 +22,40 @@ namespace LOTR {
             
             int lineCount = lines.Length;
             int rowCount = lines[0].Length;
-            Console.WriteLine($"rowCount: {rowCount}, lineCount: {lineCount}");
+
             map = new char[rowCount, lineCount];
 
-            int i, j = 0;
-            for (i = 0; i < lineCount - 1; i++) {
-                for (j = 0; j < rowCount; j++) {
+            int line, row = 0;
+            for (line = 0; line < lineCount - 1; line++) {
+                for (row = 0; row < rowCount; row++) {
                     try {
-                        tyle = lines[j][i];
+                        tyle = lines[line][row];
 
                     }
-                    catch(Exception er) {
-                        throw (new Exception($"Error. Matrix out of bounds at line {i} row {j}."));
+                    
+                    catch {
+                        throw (new Exception($"Error. Matrix out of bounds at [row {row} line {line}]."));
                     }
 
                     if (!terrainOptions.Contains(tyle)) {
-                        Types.charToObjectiveLocation.Add(tyle, (j, i));
+                        Types.charToObjectiveLocation.Add(tyle, (row, line));
                         Types.tileTypeToInt.Add(tyle, 1);
                         objectives.Add(tyle);
                     }
                     
-                    map[j, i] = tyle;
+                    try {
+                        map[row, line] = tyle;
+                    }
+                    
+                    catch {
+                        throw (new Exception($"Error. Matrix out of bounds at [row {row} line {line}]."));
+                    }
                 }
             }
             
             
-            Grid_node.XMax = j;
-            Grid_node.YMax = i;
+            Grid_node.XMax = row;
+            Grid_node.YMax = line;
         }
 
         public List<(int, int)>  exportObjectivesLocations() {

@@ -27,7 +27,7 @@ namespace LOTR {
                 objectiveY = XY.Item2;
 
                 if (debug) {
-                    Console.WriteLine($"Objective {MatrixSerializer.map[objectiveX, objectiveY]}: X: {objectiveX + 1}, Y: {objectiveY + 1}");
+                    Console.WriteLine($"Objective {MatrixSerializer.map[objectiveX, objectiveY]}: X: {objectiveX}, Y: {objectiveY}");
                 }
                 
                 Objectives.Add(new Grid_node(objectiveX, objectiveY));
