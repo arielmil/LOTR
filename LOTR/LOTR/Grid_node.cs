@@ -98,11 +98,11 @@ namespace LOTR {
         public void SetFestimateHValue(Grid_node destiny, heuristicMethod method) {
             switch (method) {
                 case(heuristicMethod.Manhattan):
-                    f = ManhattanHeuristic(destiny);
+                    h = ManhattanHeuristic(destiny);
                     break;
                 
                 case(heuristicMethod.Euclidian):
-                    f = EuclidianHeuristic(destiny);
+                    h = EuclidianHeuristic(destiny);
                     break;
             }
         }
