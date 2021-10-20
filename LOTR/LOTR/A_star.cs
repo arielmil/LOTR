@@ -8,6 +8,8 @@ namespace LOTR {
 
         private Grid_node Shire;
         public Grid_node fatherPath { get; private set; }
+
+        private static Random randomizer = new Random();
         
         public A_star(MatrixSerializer matrixSerializer, bool debug = false) {
             this.debug = debug;
@@ -110,6 +112,18 @@ namespace LOTR {
                 }
                 
                 if (node2 != null && node1 != null && node1.f == node2.f) {
+                    if (node1.h < node2.h) {
+                        return -1;
+                    }
+                    
+                    if (node1.h > node2.h) {
+                        return 1;
+                    }
+
+                    if (node1.h == node2.h) {
+                        return randomizer.Next(-1, 1);
+                    }
+
                     return 0;
                 }
 

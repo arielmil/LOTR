@@ -81,7 +81,7 @@ namespace LOTR {
                 neighbor = new Grid_node(neighborX, neighborY);
                 neighbor.g = g + neighbor.getTypeCost();
                 neighbor.SetEstimateHValue(destiny, method);
-                neighbor.f = g + h;
+                neighbor.f = neighbor.g + neighbor.h;
                 neighbor.parent = this;
                     
                 Grid_node_network.Add(neighbor);
