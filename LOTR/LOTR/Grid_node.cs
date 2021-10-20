@@ -118,8 +118,9 @@ namespace LOTR {
             return (float)Math.Sqrt(Math.Pow(triangleBase, 2) + Math.Pow(triangleHeight, 2));
         }
 
-        public bool Equals(Grid_node gridNode) {
-            return (gridNode.X == X && gridNode.Y == Y);
+        public override bool Equals(Object O) {
+            Grid_node gridNode = (Grid_node) O;
+            return gridNode != null && (gridNode.X == X && gridNode.Y == Y);
         }
     }
 }
