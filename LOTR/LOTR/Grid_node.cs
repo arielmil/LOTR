@@ -118,6 +118,22 @@ namespace LOTR {
             return (float)Math.Sqrt(Math.Pow(triangleBase, 2) + Math.Pow(triangleHeight, 2));
         }
 
+        public void retracePath() {
+            int i = 0;
+            
+            Console.WriteLine($"Step {0}: X: {X}, Y: {Y}, type: {tileType.ToString()}");
+            
+            Grid_node Localparent = this.parent;
+            while (Localparent.parent != null) {
+                Console.WriteLine($"Step {i + 1}: X: {Localparent.X}, Y: {Localparent.Y}, type: {Localparent.tileType.ToString()}");
+                i++;
+
+                Localparent = Localparent.parent;
+            }
+            
+            Console.WriteLine($"Step {i}: X: {Localparent.X}, Y: {Localparent.Y}, type: {Localparent.tileType.ToString()}");
+        }
+        
         public override bool Equals(Object O) {
             Grid_node gridNode = (Grid_node) O;
             return gridNode != null && (gridNode.X == X && gridNode.Y == Y);
