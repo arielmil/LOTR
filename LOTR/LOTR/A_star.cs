@@ -131,7 +131,7 @@ namespace LOTR {
 
                     if (node1.h == node2.h) {
                         if (!node1.Equals(node2)) {
-                            return randomizer.Next(-1, 1);
+                            return randomizer.Next(-1, 2);
                         }
 
                         return 0;
