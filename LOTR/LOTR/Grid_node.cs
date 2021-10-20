@@ -4,6 +4,7 @@ using static LOTR.Types;
 
 namespace LOTR {
     public class Grid_node {
+        private bool debug;
         public char tileType { get; set; }
         
         //Distance from node to begin
@@ -25,7 +26,7 @@ namespace LOTR {
 
         public List<Grid_node> Neighbors { get; private set; }
 
-        public Grid_node(int X, int Y) {
+        public Grid_node(int X, int Y, bool debug = false) {
             tileType = MatrixSerializer.map[X, Y];
             Neighbors = new List<Grid_node>();
             
@@ -35,50 +36,52 @@ namespace LOTR {
             
             this.X = X;
             this.Y = Y;
+
+            this.debug = debug;
         }
         
         public int getTypeCost() {
             return tileTypeToInt[tileType];
         }
 
-        public void expand(Grid_node endNode, heuristicMethod method) {
+        public void expand(Grid_node endNode, heuristicMethod method, bool debug = false) {
             if (X > 0 && X < XMax || Y > 0 && Y < YMax) {
                 if (X > 0 && X < XMax) {
-                    setOneNeighbor(X + 1, Y, endNode, method);
-                    setOneNeighbor(X - 1, Y, endNode, method);
+                    setOneNeighbor(X + 1, Y, endNode, method, debug);
+                    setOneNeighbor(X - 1, Y, endNode, method, debug);
                 }
                 if (Y > 0 && Y < YMax) {
-                    setOneNeighbor(X, Y + 1, endNode, method);
-                    setOneNeighbor(X, Y - 1, endNode, method);
+                    setOneNeighbor(X, Y + 1, endNode, method, debug);
+                    setOneNeighbor(X, Y - 1, endNode, method, debug);
                 }
             }
 
             else if (X == 0 || Y == 0) {
                 if (X == 0) {
-                    setOneNeighbor(1, Y, endNode, method);
+                    setOneNeighbor(1, Y, endNode, method, debug);
                 }
 
                 if (Y == 0) {
-                    setOneNeighbor(X, 1, endNode, method);
+                    setOneNeighbor(X, 1, endNode, method, debug);
                 }
             }
 
             else {
                 if (X == XMax) {
-                    setOneNeighbor(XMax - 1, Y, endNode, method);
+                    setOneNeighbor(XMax - 1, Y, endNode, method, debug);
                 }
 
                 if (Y == YMax) {
-                    setOneNeighbor(X, Y - 1, endNode, method);
+                    setOneNeighbor(X, Y - 1, endNode, method, debug);
                 }
             }
         }
 
-        public void setOneNeighbor(int neighborX, int neighborY, Grid_node destiny, heuristicMethod method) {
+        public void setOneNeighbor(int neighborX, int neighborY, Grid_node destiny, heuristicMethod method, bool debug) {
             Grid_node neighbor = Grid_node_network.Get(neighborX, neighborY);
             if (neighbor == null) {
                     
-                neighbor = new Grid_node(neighborX, neighborY);
+                neighbor = new Grid_node(neighborX, neighborY, debug);
                 neighbor.g = g + neighbor.getTypeCost();
                 neighbor.SetEstimateHValue(destiny, method);
                 neighbor.f = neighbor.g + neighbor.h;
@@ -119,19 +122,28 @@ namespace LOTR {
         }
 
         public void retracePath() {
-            int i = 0;
-            
-            Console.WriteLine($"Step {0}: X: {X}, Y: {Y}, type: {tileType.ToString()}");
-            
-            Grid_node Localparent = this.parent;
-            while (Localparent.parent != null) {
-                Console.WriteLine($"Step {i + 1}: X: {Localparent.X}, Y: {Localparent.Y}, type: {Localparent.tileType.ToString()}");
-                i++;
 
-                Localparent = Localparent.parent;
+            if (debug) { 
+                Console.WriteLine($"Step {0}: X: {X}, Y: {Y}, type: {tileType.ToString()}");
             }
             
-            Console.WriteLine($"Step {i}: X: {Localparent.X}, Y: {Localparent.Y}, type: {Localparent.tileType.ToString()}");
+            Grid_node Localparent = this.parent;
+            
+            int i = 0;
+            while (Localparent.parent != null) {
+                
+                if (debug) {
+                    Console.WriteLine($"Step {i + 1}: X: {Localparent.X}, Y: {Localparent.Y}, type: {Localparent.tileType.ToString()}");
+                }
+
+                Localparent = Localparent.parent;
+                
+                i++;
+            }
+
+            if (debug) {
+                Console.WriteLine($"Step {i + 1}: X: {Localparent.X}, Y: {Localparent.Y}, type: {Localparent.tileType.ToString()}");
+            }
         }
         
         public override bool Equals(Object O) {

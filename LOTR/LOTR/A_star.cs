@@ -34,6 +34,10 @@ namespace LOTR {
                 
                 Objectives.Add(new Grid_node(objectiveX, objectiveY));
             }
+            
+            if (debug) {
+                Console.WriteLine();
+            }
         }
         
         //Main Loop from shire to mountDoom and back
@@ -72,7 +76,7 @@ namespace LOTR {
                 open.Remove(currentNode);
                 closed.Add(currentNode);
                 
-                currentNode.expand(destiny, Types.heuristicMethod.Manhattan);
+                currentNode.expand(destiny, Types.heuristicMethod.Manhattan, true);
                 
                 best = float.MaxValue;
                 
@@ -132,10 +136,7 @@ namespace LOTR {
 
                         return 0;
                     }
-
-                    if (debug) {
-                        Console.WriteLine($"node1: X: {node1.X}, Y: {node1.Y}, node2: X: {node2.X}, Y: {node2.Y}");
-                    }
+                    
                     return 0;
                 }
 
