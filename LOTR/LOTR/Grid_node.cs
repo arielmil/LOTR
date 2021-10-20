@@ -80,7 +80,7 @@ namespace LOTR {
                     
                 neighbor = new Grid_node(neighborX, neighborY);
                 neighbor.g = g + neighbor.getTypeCost();
-                neighbor.SetFestimateHValue(destiny, method);
+                neighbor.SetestimateHValue(destiny, method);
                 neighbor.f = g + h;
                 neighbor.parent = this;
                     
@@ -95,7 +95,7 @@ namespace LOTR {
             f = g + h;
         }
 
-        public void SetFestimateHValue(Grid_node destiny, heuristicMethod method) {
+        public void SetestimateHValue(Grid_node destiny, heuristicMethod method) {
             switch (method) {
                 case(heuristicMethod.Manhattan):
                     h = ManhattanHeuristic(destiny);
