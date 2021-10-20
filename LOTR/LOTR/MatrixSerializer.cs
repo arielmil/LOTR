@@ -7,7 +7,11 @@ using System.Numerics;
 namespace LOTR {
     public class MatrixSerializer {
         private static String terrainOptions = ".#RVMP";
+        
         public static char[,] map;
+
+        private static int rowCount;
+        private static int lineCount;
 
         private SortedSet<char> objectives;
         
@@ -20,8 +24,8 @@ namespace LOTR {
             
             objectives = new SortedSet<char>(new ObjectiveComparer(debug));
             
-            int lineCount = lines.Length;
-            int rowCount = lines[0].Length;
+            lineCount = lines.Length;
+            rowCount = lines[0].Length;
 
             map = new char[rowCount, lineCount];
 
@@ -53,9 +57,38 @@ namespace LOTR {
                 }
             }
             
-            
             Grid_node.XMax = row;
             Grid_node.YMax = line;
+        }
+
+        //Quebra o encapsulamento ?
+        public static void printTracedPathOnMap(Grid_node fatherPath) {
+            string pathO = Path.GetFullPath(Path.Combine(".", "..", "..", "..", "..", "mapaMock.txt"));
+
+            char[,] mockMap = (char[,]) map.Clone();
+            string[] mockMapOutput = new string[lineCount];
+
+            int line, row;
+
+            Grid_node localFatherPath = fatherPath.parent;
+
+            while (localFatherPath.parent != null) {
+                mockMap[localFatherPath.X, localFatherPath.Y] = '@';
+                localFatherPath = localFatherPath.parent;
+            }
+
+            string Sline;
+            for (line = 0; line < lineCount - 1; line++) {
+                Sline = "";
+                
+                for (row = 0; row < rowCount; row++) {
+                    Sline = Sline + mockMap[row, line];
+                }
+
+                mockMapOutput[line] = Sline;
+            }
+            
+            File.WriteAllLines(pathO, mockMapOutput);
         }
 
         public List<(int, int)>  exportObjectivesLocations() {
