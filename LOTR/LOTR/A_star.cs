@@ -54,7 +54,7 @@ namespace LOTR {
 
             float best;
             
-            SortedSet<Grid_node> open = new SortedSet<Grid_node>(new NodeComparer());
+            SortedSet<Grid_node> open = new SortedSet<Grid_node>(new NodeComparer(true));
             List<Grid_node> closed = new List<Grid_node>();
             
             Grid_node currentNode = source;
@@ -106,6 +106,11 @@ namespace LOTR {
         }
 
         private class NodeComparer : IComparer<Grid_node> {
+            private bool debug;
+
+            public NodeComparer(bool debug = false) {
+                this.debug = debug;
+            }
             public int Compare(Grid_node node1, Grid_node node2) {
                 if (node2 != null && node1 != null && node1.f < node2.f) {
                     return -1;
@@ -121,9 +126,16 @@ namespace LOTR {
                     }
 
                     if (node1.h == node2.h) {
-                        return randomizer.Next(-1, 1);
+                        if (!node1.Equals(node2)) {
+                            return randomizer.Next(-1, 1);
+                        }
+
+                        return 0;
                     }
 
+                    if (debug) {
+                        Console.WriteLine($"node1: X: {node1.X}, Y: {node1.Y}, node2: X: {node2.X}, Y: {node2.Y}");
+                    }
                     return 0;
                 }
 
