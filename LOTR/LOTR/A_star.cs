@@ -8,8 +8,6 @@ namespace LOTR {
 
         private Grid_node Shire;
         public Grid_node fatherPath { get; private set; }
-
-        private static Random randomizer = new Random();
         
         public A_star(MatrixSerializer matrixSerializer, bool debug = false) {
             this.debug = debug;
@@ -58,7 +56,7 @@ namespace LOTR {
 
             float best;
             
-            SortedSet<Grid_node> open = new SortedSet<Grid_node>(new NodeComparer(true));
+            Grid_node_SortedList open = new Grid_node_SortedList();
             List<Grid_node> closed = new List<Grid_node>();
             
             Grid_node currentNode = source;
@@ -67,13 +65,12 @@ namespace LOTR {
             open.Add(currentNode);
             
             while (open.Count > 0) {
-                currentNode = open.Min;
+                currentNode = open.PopMin();
                 
                 if (currentNode.Equals(destiny)) {
                     return currentNode;
                 }
                 
-                open.Remove(currentNode);
                 closed.Add(currentNode);
                 
                 currentNode.expand(destiny, Types.heuristicMethod.Manhattan, true);
@@ -108,40 +105,6 @@ namespace LOTR {
             //No path found
             return null;
         }
-
-        private class NodeComparer : IComparer<Grid_node> {
-            private bool debug;
-
-            public NodeComparer(bool debug = false) {
-                this.debug = debug;
-            }
-            public int Compare(Grid_node node1, Grid_node node2) {
-                if (node2 != null && node1 != null && node1.f < node2.f) {
-                    return -1;
-                }
-                
-                if (node2 != null && node1 != null && node1.f == node2.f) {
-                    if (node1.h < node2.h) {
-                        return -1;
-                    }
-                    
-                    if (node1.h > node2.h) {
-                        return 1;
-                    }
-
-                    if (node1.h == node2.h) {
-                        if (!node1.Equals(node2)) {
-                            return randomizer.Next(-1, 2);
-                        }
-
-                        return 0;
-                    }
-                    
-                    return 0;
-                }
-
-                return 1;
-            }
-        }
+        
     }
 }
