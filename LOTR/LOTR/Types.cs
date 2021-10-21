@@ -10,7 +10,7 @@ namespace LOTR {
         }
         
         public static Dictionary<char, int> tileTypeToInt = new Dictionary<char, int>() {{'.', 1}, {'R', 5},
-            {'V', 10}, {'M', 50}, {'P', Int32.MaxValue}, {'#', Int32.MaxValue}};
+            {'V', 10}, {'M', 50}, {'P', Int32.MaxValue}, {'#', Int32.MaxValue}, {'\0', 0}};
 
         public static Dictionary<char, (int, int)> charToObjectiveLocation = new Dictionary<char, (int, int)>();
     }

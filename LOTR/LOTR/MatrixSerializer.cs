@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Numerics;
 
 namespace LOTR {
     public class MatrixSerializer {
@@ -30,7 +28,7 @@ namespace LOTR {
             map = new char[rowCount, lineCount];
 
             int line, row = 0;
-            for (line = 0; line < lineCount - 1; line++) {
+            for (line = 0; line < lineCount; line++) {
                 for (row = 0; row < rowCount; row++) {
                     try {
                         tyle = lines[line][row];
@@ -57,8 +55,8 @@ namespace LOTR {
                 }
             }
             
-            Grid_node.XMax = row;
-            Grid_node.YMax = line;
+            Grid_node.XMax = row - 1;
+            Grid_node.YMax = line - 1;
         }
 
         //Quebra o encapsulamento ?
@@ -78,7 +76,7 @@ namespace LOTR {
             }
 
             string Sline;
-            for (line = 0; line < lineCount - 1; line++) {
+            for (line = 0; line < lineCount; line++) {
                 Sline = "";
                 
                 for (row = 0; row < rowCount; row++) {
@@ -109,9 +107,7 @@ namespace LOTR {
             public int Compare(char objective1, char objective2) {
                 bool objective1IsNumber = Char.IsNumber(objective1);
                 bool objective2IsNumber = Char.IsNumber(objective2);
-
-                int val1, val2;
-            
+                
                 if (objective1IsNumber) {
                     if (objective2IsNumber) {
                         if (debug) {
